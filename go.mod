@@ -1,4 +1,4 @@
-module qtools
+module ScrapeGOAT
 
 go 1.23.2
 
