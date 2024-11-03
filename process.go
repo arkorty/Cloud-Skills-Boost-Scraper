@@ -1,18 +1,5 @@
 package main
 
-import "os"
-
-func appendClosingBracket(filename string) error {
-	file, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0644)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	_, err = file.WriteString("]")
-	return err
-}
-
 func getCompletedAssignments(badges []string, assignments []string) []string {
 	var completed []string
 	for _, assignment := range assignments {

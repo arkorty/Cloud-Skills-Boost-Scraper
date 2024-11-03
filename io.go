@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-func appendToJSONFile(profile Profile, filename string) error {
-	file, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+func writeToJSONFile(profiles []Profile, filename string) error {
+	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return err
 	}
@@ -16,7 +16,8 @@ func appendToJSONFile(profile Profile, filename string) error {
 
 	encoder := json.NewEncoder(file)
 	encoder.SetIndent("", "  ")
-	if err := encoder.Encode(profile); err != nil {
+
+	if err := encoder.Encode(profiles); err != nil {
 		return err
 	}
 

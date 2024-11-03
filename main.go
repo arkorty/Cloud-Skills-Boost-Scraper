@@ -17,15 +17,12 @@ func main() {
 
 	reader := csv.NewReader(csvFile)
 
-	jsonFileName := "data/scraped_data.json"
-	if err := os.WriteFile(jsonFileName, []byte("["), 0644); err != nil {
-		log.Fatal(err)
-	}
-
 	records, err := reader.ReadAll()
 	if err != nil {
 		log.Fatal(err)
 	}
+
+    var profiles []Profile
 
 	for i, record := range records[1:] {
 		if len(record) < 3 {
@@ -60,21 +57,20 @@ func main() {
 		if err != nil {
 			log.Printf("Error scraping profile %s: %v", profileURL, err)
 			continue
-		}
-
+		} 
 		profile.Name = strings.TrimSpace(userName)
 		profile.Email = strings.TrimSpace(userEmail)
 
-		if err := appendToJSONFile(profile, jsonFileName); err != nil {
-			log.Printf("Error saving profile to JSON: %v", err)
-		} else {
-			log.Printf("Successfully scraped and saved profile: %s", profile.Name)
+        if err == nil {
+			log.Printf("Successfully scraped profile: %s", profile.Name)
 		}
+
+        profiles = append(profiles, profile)
 	}
 
-	if err := appendClosingBracket(jsonFileName); err != nil {
-		log.Fatal(err)
-	}
+    if err := writeToJSONFile(profiles, jsonFileName); err != nil {
+        log.Fatal(err)
+    }
 
-	log.Println("All profiles processed and saved to profiles.json")
+	log.Println("Response written to %s", jsonFileName)
 }
