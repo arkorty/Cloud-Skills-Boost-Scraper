@@ -1,0 +1,56 @@
+import sys
+import json
+import base64
+
+
+def json_to_key_data(json_data):
+    data = json.loads(json_data)
+
+    key_data = [
+        {
+            key: value
+            for key, value in student.items()
+            if key
+            in [
+                "name",
+                "email",
+                "profile_url",
+                "badges_count",
+                "incomplete_assignments_count",
+                "completed_assignments_count",
+                "badges",
+                "incomplete_assignments",
+                "completed_assignments",
+            ]
+        }
+        for student in data
+    ]
+
+    return key_data
+
+
+def main():
+    try:
+        with open(f"{sys.argv[1]}", "r") as json_file:
+            json_string = json_file.read()
+    except FileNotFoundError:
+        print("students.json file not found.")
+        return
+    except json.JSONDecodeError:
+        print("Error decoding JSON from the file.")
+        return
+
+    key_data = json_to_key_data(json_string)
+
+    key_data_json = json.dumps(key_data)
+
+    base64_encoded_data = base64.b64encode(key_data_json.encode("utf-8"))
+
+    with open(f"{sys.argv[2]}", "wb") as base64_file:
+        base64_file.write(base64_encoded_data)
+
+    print(f"Base64 encoded data successfully written to {sys.argv[2]}")
+
+
+if __name__ == "__main__":
+    main()
