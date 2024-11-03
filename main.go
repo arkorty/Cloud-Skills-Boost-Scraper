@@ -7,9 +7,15 @@ import (
 	"strings"
 )
 
-
 func main() {
-	csvFile, err := os.Open("data/profile_data.csv")
+	if len(os.Args) < 3 {
+		log.Fatal("Usage: ScrapeGOAT <input_csv> <output_json>")
+	}
+
+	csvFileName := os.Args[1]
+	jsonFileName := os.Args[2]
+
+	csvFile, err := os.Open(csvFileName)
 	if err != nil {
 		log.Fatal(err)
 	}
