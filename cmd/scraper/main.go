@@ -10,7 +10,7 @@ import (
 
 func main() {
 	if len(os.Args) < 3 {
-		log.Fatal("Usage: scraper <input_csv> <output_json>")
+		log.Fatal("Usage: scraper <input.csv> <output.json>")
 	}
 
 	csvFileName := os.Args[1]
