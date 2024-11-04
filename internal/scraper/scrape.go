@@ -1,4 +1,4 @@
-package main
+package scraper
 
 import (
 	"fmt"
@@ -16,7 +16,7 @@ func fetchProfile(url string) (*http.Response, error) {
 	return res, nil
 }
 
-func scrapeProfile(url string, assignments []string) (Profile, error) {
+func ScrapeProfile(url string, assignments []string) (Profile, error) {
 	res, err := fetchProfile(url)
 	if err != nil {
 		return Profile{}, err

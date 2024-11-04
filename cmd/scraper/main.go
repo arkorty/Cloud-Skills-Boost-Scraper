@@ -5,11 +5,12 @@ import (
 	"log"
 	"os"
 	"strings"
+    "scraper/internal/scraper"
 )
 
 func main() {
 	if len(os.Args) < 3 {
-		log.Fatal("Usage: ScrapeGOAT <input_csv> <output_json>")
+		log.Fatal("Usage: scraper <input_csv> <output_json>")
 	}
 
 	csvFileName := os.Args[1]
@@ -28,7 +29,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-    var profiles []Profile
+    var profiles []scraper.Profile
 
 	for i, record := range records[1:] {
 		if len(record) < 3 {
@@ -59,7 +60,7 @@ func main() {
             "Level 3: Google Cloud Adventures",
         }
 
-		profile, err := scrapeProfile(profileURL, assignments)
+		profile, err := scraper.ScrapeProfile(profileURL, assignments)
 		if err != nil {
 			log.Printf("Error scraping profile %s: %v", profileURL, err)
 			continue
@@ -74,9 +75,9 @@ func main() {
         profiles = append(profiles, profile)
 	}
 
-    if err := writeToJSONFile(profiles, jsonFileName); err != nil {
+    if err := scraper.WriteToJSONFile(profiles, jsonFileName); err != nil {
         log.Fatal(err)
     }
 
-	log.Println("Response written to %s", jsonFileName)
+	log.Printf("Response written to %s", jsonFileName)
 }

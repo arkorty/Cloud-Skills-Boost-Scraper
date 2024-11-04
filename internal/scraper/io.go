@@ -1,4 +1,4 @@
-package main
+package scraper
 
 import (
 	"bufio"
@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func writeToJSONFile(profiles []Profile, filename string) error {
+func WriteToJSONFile(profiles []Profile, filename string) error {
 	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return err

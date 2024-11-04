@@ -1,4 +1,4 @@
-package main
+package scraper
 
 type Profile struct {
 	Name                     string   `json:"name"`

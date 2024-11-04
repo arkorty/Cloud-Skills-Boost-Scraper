@@ -1,4 +1,4 @@
-package main
+package scraper
 
 func getCompletedAssignments(badges []string, assignments []string) []string {
 	var completed []string

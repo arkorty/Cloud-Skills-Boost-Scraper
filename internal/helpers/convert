@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 import sys
 import json
 import base64
@@ -30,11 +33,15 @@ def json_to_key_data(json_data):
 
 
 def main():
+    if len(sys.argv) != 3:
+        print("Usage: helper <input.json> <output>")
+        return
+
     try:
         with open(f"{sys.argv[1]}", "r") as json_file:
             json_string = json_file.read()
     except FileNotFoundError:
-        print("students.json file not found.")
+        print(f"{sys.argv[1]} file not found.")
         return
     except json.JSONDecodeError:
         print("Error decoding JSON from the file.")
