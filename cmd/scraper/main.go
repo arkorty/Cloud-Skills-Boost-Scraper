@@ -57,7 +57,8 @@ func main() {
             "Get Started with Looker",
             "Get Started with API Gateway",
             "Get Started with Cloud Storage",
-            "Level 3: Google Cloud Adventures",
+            //"Level 3: Google Cloud Adventures",
+            //"Diwali in The Arcade",
         }
 
 		profile, err := scraper.ScrapeProfile(profileURL, assignments)
