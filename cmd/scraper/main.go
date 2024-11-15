@@ -4,8 +4,8 @@ import (
 	"encoding/csv"
 	"log"
 	"os"
+	"scraper/internal/scraper"
 	"strings"
-    "scraper/internal/scraper"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-    var profiles []scraper.Profile
+	var profiles []scraper.Profile
 
 	for i, record := range records[1:] {
 		if len(record) < 3 {
@@ -41,44 +41,47 @@ func main() {
 		userName := record[0]
 		userEmail := record[1]
 
-        var assignments = []string{
-            "Get Started with Pub/Sub",
-            "Develop GenAI Apps with Gemini and Streamlit",
-            "Prompt Design in Vertex AI",
-            "Analyze Images with the Cloud Vision API",
-            "Networking Fundamentals on Google Cloud",
-            "Monitoring in Google Cloud",
-            "Cloud Speech API: 3 Ways",
-            "App Engine: 3 Ways",
-            "Cloud Functions: 3 Ways",
-            "Get Started with Google Workspace Tools",
-            "Get Started with Dataplex",
-            "The Basics of Google Cloud Compute",
-            "Get Started with Looker",
-            "Get Started with API Gateway",
-            "Get Started with Cloud Storage",
-            //"Level 3: Google Cloud Adventures",
-            //"Diwali in The Arcade",
-        }
+		var assignments = []string{
+			"Get Started with Pub/Sub",
+			"Develop GenAI Apps with Gemini and Streamlit",
+			"Prompt Design in Vertex AI",
+			"Analyze Images with the Cloud Vision API",
+			"Networking Fundamentals on Google Cloud",
+			"Monitoring in Google Cloud",
+			"Cloud Speech API: 3 Ways",
+			"App Engine: 3 Ways",
+			"Cloud Functions: 3 Ways",
+			"Get Started with Google Workspace Tools",
+			"Get Started with Dataplex",
+			"The Basics of Google Cloud Compute",
+			"Get Started with Looker",
+			"Get Started with API Gateway",
+			"Get Started with Cloud Storage",
+		}
 
-		profile, err := scraper.ScrapeProfile(profileURL, assignments)
+		var arcades = []string{
+			"Level 3: Google Cloud Adventures",
+			"Diwali in The Arcade",
+		}
+
+		profile, err := scraper.ScrapeProfile(profileURL, assignments, arcades)
 		if err != nil {
 			log.Printf("Error scraping profile %s: %v", profileURL, err)
 			continue
-		} 
+		}
 		profile.Name = strings.TrimSpace(userName)
 		profile.Email = strings.TrimSpace(userEmail)
 
-        if err == nil {
+		if err == nil {
 			log.Printf("Successfully scraped profile: %s", profile.Name)
 		}
 
-        profiles = append(profiles, profile)
+		profiles = append(profiles, profile)
 	}
 
-    if err := scraper.WriteToJSONFile(profiles, jsonFileName); err != nil {
-        log.Fatal(err)
-    }
+	if err := scraper.WriteToJSONFile(profiles, jsonFileName); err != nil {
+		log.Fatal(err)
+	}
 
 	log.Printf("Response written to %s", jsonFileName)
 }

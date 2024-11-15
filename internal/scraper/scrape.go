@@ -16,7 +16,7 @@ func fetchProfile(url string) (*http.Response, error) {
 	return res, nil
 }
 
-func ScrapeProfile(url string, assignments []string) (Profile, error) {
+func ScrapeProfile(url string, assignments []string, arcades []string) (Profile, error) {
 	res, err := fetchProfile(url)
 	if err != nil {
 		return Profile{}, err
@@ -45,10 +45,10 @@ func ScrapeProfile(url string, assignments []string) (Profile, error) {
 
 	profile.BadgesCount = len(profile.Badges)
 
-	profile.CompletedAssignments = getCompletedAssignments(profile.Badges, assignments)
+	profile.CompletedAssignments = getCompletedAssignments(profile.Badges, assignments, arcades)
 	profile.CompletedAssignmentsCount = len(profile.CompletedAssignments)
 
-	profile.IncompleteAssignments = getIncompleteAssignments(profile.CompletedAssignments, assignments)
+	profile.IncompleteAssignments = getIncompleteAssignments(profile.CompletedAssignments, assignments, arcades)
 	profile.IncompleteAssignmentsCount = len(profile.IncompleteAssignments)
 
 	return profile, nil
