@@ -17,11 +17,11 @@ A Go application that scrapes profile information from a list of URLs, processes
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/arkorty/Cloud-Skills-Boost-Scraper.git
+   git clone https://github.com/arkorty/booststats-scraper.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd Cloud-Skills-Boost-Scraper
+   cd booststats-scraper
    ```
 3. Build the project:
    ```bash
